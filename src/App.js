@@ -8,7 +8,7 @@ import React from 'react'
 import {Redirect, BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import myquestions from './myquestions';
 // import myanswered from './myanswered';
-import myunanswered from './myunanswered';
+import Myunanswered from './myunanswered';
 function App() {
   const  [users, setusers ] = useState()
   const  [currentuser, setcurrentuser ] = useState()
@@ -18,8 +18,7 @@ function App() {
     var  questions = await data._getQuestions();
     setusers(users);
     setquestions(questions);
-    //  alert('users is ' + JSON.stringify(Object.keys(users)));
-  })();
+   })();
 }, []);
   return (
 
@@ -40,7 +39,7 @@ function App() {
 
     <Route path="/myquestions"  component={myquestions}/>
     {/* <Route path="/myanswered"  component={myanswered}/> */}
-    <Route path="/myunanswered"  component={myunanswered}/>
+    <Route path="/myunanswered"  component={Myunanswered}/>
  
 
     <Route path="/yourquestions" render={(props)=>{

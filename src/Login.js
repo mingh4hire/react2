@@ -3,6 +3,7 @@ import {Redirect, BrowserRouter as Router, Route} from 'react-router-dom'
 export function Login(props){
     function setcurrentuser(evt){
         props.setcurrentuser(evt.target.value)
+        localStorage.setItem("user",evt.target.value)
     }
     return <div> 
 {props.currentuser}
