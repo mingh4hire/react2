@@ -5,8 +5,10 @@ import Login from './Login';
 
 import {useState } from 'react'
 import React from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom' 
+import {Redirect, BrowserRouter as Router, Route} from 'react-router-dom'
 import myquestions from './myquestions';
+// import myanswered from './myanswered';
+import myunanswered from './myunanswered';
 function App() {
   const  [users, setusers ] = useState()
   const  [currentuser, setcurrentuser ] = useState()
@@ -35,6 +37,8 @@ alert(JSON.stringify(users));
     </Route>}
 
     <Route path="/myquestions"  component={myquestions}/>
+    {/* <Route path="/myanswered"  component={myanswered}/> */}
+    <Route path="/myunanswered"  component={myunanswered}/>
  
 
     <Route path="/yourquestions" render={(props)=>{
@@ -44,14 +48,26 @@ alert(JSON.stringify(users));
       </div>
     }}>
     
-
+    
     </Route>
-</Router>
+    <Route path="/login" component={
+      ()=>
+      <Login users={users} setusers={setusers} setcurrentuser={setcurrentuser} currentuser={currentuser}/>
+      
+      }   />
 
-         {!currentuser && 
-         <Login users={users} setusers={setusers}  currentuser={currentuser} setcurrentuser={setcurrentuser} />
-         } 
-         Hi {currentuser}
+    {!currentuser &&  
+     <Redirect
+     to={{
+       pathname: "/login",
+       search: "?utm=your+face",
+       state: { referrer: 23 }
+     }}
+   />}
+         
+ </Router>
+
+       
 
       </div>
   );
