@@ -1,24 +1,40 @@
 import logo from './logo.svg';
 import './App.css';
-
+import * as data from './_Data.js';
+import {Router , Route} from 'react-router-dom';
 function App() {
+  var ccc = '23423'
+  var users = null
+   var a  = (async()=>{
+     users = await data._getUsers();
+    //  alert('users is ' + JSON.stringify(Object.keys(users)));
+  })();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      {1 + 2342 + 'asdf' + ccc}
+    {users && Object.keys(users)} are the keys
+    <hr/>
+{users &&  Object.keys(users).map(x=> 
+          <div>
+          
+         { users[x].id  }    { users[x].name  }        
+             
+</div>)}
+
+      <select>
+        {users && Object.keys(users).map(x=> 
+          
+          
+          <option value={ users[x].id  }>   { users[x].name  }        
+            </option>
+            
+            )
+}
+</select>
+
+
+       
+     </div>
   );
 }
 
