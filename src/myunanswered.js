@@ -1,5 +1,13 @@
 export function myunanswered(){
-    return <div> uin answered</div>
+    return <div> 
+        
+        <h3>Answer some questions</h3>
+
+        
+
+
+
+    </div>
 }
 
 export default myunanswered;
