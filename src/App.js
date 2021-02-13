@@ -5,17 +5,19 @@ import Login from './Login';
 
 import {useState } from 'react'
 import React from 'react'
-import {Redirect, BrowserRouter as Router, Route} from 'react-router-dom'
+import {Redirect, BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import myquestions from './myquestions';
 // import myanswered from './myanswered';
 import myunanswered from './myunanswered';
 function App() {
   const  [users, setusers ] = useState()
   const  [currentuser, setcurrentuser ] = useState()
+  const  [questions, setquestions ] = useState()
   React.useEffect(()=>{ (async()=>{
     var  users = await data._getUsers();
-      setusers(users);
-alert(JSON.stringify(users));
+    var  questions = await data._getQuestions();
+    setusers(users);
+    setquestions(questions);
     //  alert('users is ' + JSON.stringify(Object.keys(users)));
   })();
 }, []);
@@ -60,17 +62,38 @@ alert(JSON.stringify(users));
      <Redirect
      to={{
        pathname: "/login",
-       search: "?utm=your+face",
+      //  search: "?utm=your+face",
        state: { referrer: 23 }
      }}
    />}
          
- </Router>
+
+     {currentuser && <div>
+      <Link to="myunanswered">answer some questions</Link>
 
        
+       <Route exact path="/">
+     <h3>My Questions that I authored</h3> 
+       {questions && Object.keys(questions).filter(x=> questions[x].author == currentuser).map(x=>
+          
+          <div>
+            Would you rather <br/>
+                {questions[x].optionOne.text } or   {questions[x].optionTwo.text }
+                <br/>
+                <br/>
 
-      </div>
-  );
-}
+                 </div>)
+                        }
 
+</Route>
+
+                        </div>}
+                        </Router>
+
+
+                             </div>
+
+
+  )
+    }
 export default App;

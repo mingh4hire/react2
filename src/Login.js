@@ -14,12 +14,11 @@ export function Login(props){
  <Redirect
   to={{
     pathname: "/",
-    search: "?utm=your+face",
-    state: { referrer: 23 }
+     state: { referrer: 23 }
   }}
 />}
     <select value={props.currentuser} onChange={setcurrentuser }>
-        <option key="" disabled value=""> Log in As</option>
+        <option key="" disabled value="" selected> Log in As</option>
             {props.users && Object.keys(props.users).map(x=> 
 
                  <option key={x} value={props.users[x].id}>
