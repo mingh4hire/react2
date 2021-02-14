@@ -1,5 +1,60 @@
-export function myanswered(){
-    return <div> answered</div>
+import * as data from './_Data';
+import {useState} from 'react';
+import React from 'react';
+
+export function Myanswered(){
+
+    var usr = localStorage.getItem('user');
+     var setUser
+
+     var users 
+    var setUsers
+    var questions
+    var setQuestions
+
+    var myQuestions;
+    var setMyQuestions;
+ 
+  //  [users, setUsers]  = useState();
+//   [myQuestions, setMyQuestions]  = useState()
+  [questions, setQuestions]  = useState()
+
+    React.useEffect(()=>{
+        (async()=>{
+
+              users=  await data._getUsers()
+              questions=  await data._getQuestions()
+           //  setUsers(users);
+             usr = localStorage.getItem('user');
+
+  
+              setQuestions({user: users[usr], questions: questions, myQuestions: users[localStorage.getItem('user')].questions});
+            //   setMyQuestions(users[localStorage.getItem('user')].questions);
+         })()
+
+    },[])
+    return <div>
+        
+         <h3>My answered questions</h3>
+        {questions && questions.myQuestions && Object.keys(questions.user.answers).map(x=>{
+
+
+                return <div key={x}>
+                    <div >
+                        {questions.questions[x].optionOne.text} number of votes ({questions.questions[x].optionOne.votes.length} votes)  or  &nbsp;
+                     
+                      {questions.questions[x].optionTwo.text} number of votes ({questions.questions[x].optionTwo.votes.length} votes)  <br/>
+                        {/* My answer was {user.answers[x]}<br/> */}
+                        <br/> 
+                        my answer {questions.user.answers[x]}
+                        <br/> <br/> 
+                    </div>
+                    </div>
+
+
+        })}
+    
+    </div>
 }
 
-export default myanswered;
+export default Myanswered;

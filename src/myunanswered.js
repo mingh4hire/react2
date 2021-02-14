@@ -20,8 +20,7 @@ export function Myunanswered(){
          (async()=>{
         await data._saveQuestionAnswer( { authedUser:user,qid: qid, answer:ans })
         setquestions(await data._getQuestions());
-        alert(JSON.stringify(questions))
-        })();
+         })();
         
     }
     

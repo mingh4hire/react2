@@ -7,9 +7,15 @@ import {useState } from 'react'
 import React from 'react'
 import {Redirect, BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import myquestions from './myquestions';
-// import myanswered from './myanswered';
+import Leaderboard from './leaderboard';
+import Newquestion from './newquestion';
+ import Myanswered from './myanswered';
 import Myunanswered from './myunanswered';
 function App() {
+  function logout(){
+    localStorage.setItem('user', null);
+    setcurrentuser()
+  }
   const  [users, setusers ] = useState()
   const  [currentuser, setcurrentuser ] = useState()
   const  [questions, setquestions ] = useState()
@@ -31,16 +37,41 @@ function App() {
     <Route path="/" render={(props)=>{
       return <div>
           Welcome {currentuser}
-        
+          
       </div>
     }}>
     
 
-    </Route>}
+    </Route>
+    
+    
+    }
+    {currentuser && 
+      <Link to="/leaderboard">Go to leaderboard</Link>
+    }&nbsp;
+    {currentuser && 
+      <Link to="/myunanswered">See unanswered</Link>
+    } &nbsp;
+    {currentuser && 
+      <Link to="/myanswered">See answered</Link>
+    } &nbsp;
+    {currentuser && 
+      <Link to="/newquestion">Create question</Link>
+    }&nbsp;
+    
+    {currentuser && 
+      <Link onClick={logout}> log out</Link>
+    }
+    
+    
+
+ 
+
 
     <Route path="/myquestions"  component={myquestions}/>
-    {/* <Route path="/myanswered"  component={myanswered}/> */}
+    <Route path="/myanswered"  component={Myanswered}/>
     <Route path="/myunanswered"  component={Myunanswered}/>
+    <Route path="/leaderboard"  component={Leaderboard}/>
  
 
     <Route path="/yourquestions" render={(props)=>{
@@ -57,6 +88,7 @@ function App() {
       <Login users={users} setusers={setusers} setcurrentuser={setcurrentuser} currentuser={currentuser}/>
       
       }   />
+ <Route path="/newquestion" component={Newquestion      }   />
 
     {!currentuser &&  
      <Redirect
@@ -69,8 +101,7 @@ function App() {
          
 
      {currentuser && <div>
-      <Link to="myunanswered">answer some questions</Link>
-
+ 
        
        <Route exact path="/">
      <h3>My Questions that I authored</h3> 
