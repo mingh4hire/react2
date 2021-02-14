@@ -19,7 +19,7 @@ export function Login(props){
   }}
 />}
     <select value={props.currentuser} onChange={setcurrentuser }>
-        <option key="" disabled value="" selected> Log in As</option>
+        <option key="" disabled value="" defaultValue> Log in As</option>
             {props.users && Object.keys(props.users).map(x=> 
 
                  <option key={x} value={props.users[x].id}>

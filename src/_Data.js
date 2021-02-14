@@ -190,8 +190,7 @@
         users = {
           ...users,
           [authedUser]: {
-            ...users[authedUser],
-            answers: {
+            ...users[authedUser], "answers": {
               ...users[authedUser].answers,
               [qid]: answer
             }

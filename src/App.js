@@ -14,6 +14,7 @@ function App() {
   const  [currentuser, setcurrentuser ] = useState()
   const  [questions, setquestions ] = useState()
   React.useEffect(()=>{ (async()=>{
+    let isMounted = true
     var  users = await data._getUsers();
     var  questions = await data._getQuestions();
     setusers(users);
@@ -75,7 +76,7 @@ function App() {
      <h3>My Questions that I authored</h3> 
        {questions && Object.keys(questions).filter(x=> questions[x].author == currentuser).map(x=>
           
-          <div>
+          <div key={x}>
             Would you rather <br/>
                 {questions[x].optionOne.text } or   {questions[x].optionTwo.text }
                 <br/>
