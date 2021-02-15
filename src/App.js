@@ -11,12 +11,13 @@ import Leaderboard from './leaderboard';
 import Newquestion from './newquestion';
  import Myanswered from './myanswered';
 import Myunanswered from './myunanswered';
+import Question from './Question';
 function App() {
   function logout(){
     localStorage.setItem('user', null);
     setcurrentuser()
   }
-  const  [users, setusers ] = useState()
+   const  [users, setusers ] = useState()
   const  [currentuser, setcurrentuser ] = useState()
   const  [questions, setquestions ] = useState()
   React.useEffect(()=>{ (async()=>{
@@ -31,9 +32,9 @@ function App() {
 
 
     <div className="App">
-
+<h3>Would you rather...</h3>
 <Router>
-    {currentuser && 
+    {(localStorage.getItem('user') || currentuser) && 
     <Route path="/" render={(props)=>{
       return <div>
           Welcome {currentuser}
@@ -46,20 +47,22 @@ function App() {
     
     
     }
-    {currentuser && 
+    {(localStorage.getItem('user') || currentuser) && 
       <Link to="/leaderboard">Go to leaderboard</Link>
     }&nbsp;
-    {currentuser && 
+    {(localStorage.getItem('user') || currentuser) && 
       <Link to="/myunanswered">See unanswered</Link>
     } &nbsp;
-    {currentuser && 
+    {(localStorage.getItem('user') || currentuser) && 
       <Link to="/myanswered">See answered</Link>
     } &nbsp;
-    {currentuser && 
-      <Link to="/newquestion">Create question</Link>
+    {(localStorage.getItem('user') || currentuser) && 
+      <Link to="/add">Create question</Link>
     }&nbsp;
+
     
-    {currentuser && 
+
+    {(localStorage.getItem('user') || currentuser) && 
       <Link onClick={logout}> log out</Link>
     }
     
@@ -72,7 +75,8 @@ function App() {
     <Route path="/myanswered"  component={Myanswered}/>
     <Route path="/myunanswered"  component={Myunanswered}/>
     <Route path="/leaderboard"  component={Leaderboard}/>
- 
+    <Route path="/question/:question_id"  component={Question}/>
+    
 
     <Route path="/yourquestions" render={(props)=>{
       return <div>
@@ -88,19 +92,18 @@ function App() {
       <Login users={users} setusers={setusers} setcurrentuser={setcurrentuser} currentuser={currentuser}/>
       
       }   />
- <Route path="/newquestion" component={Newquestion      }   />
+ <Route path="/add" component={Newquestion      }   />
 
-    {!currentuser &&  
+    {(!localStorage.getItem('user') && !currentuser) &&  
      <Redirect
      to={{
-       pathname: "/login",
+       pathname: "/login"
       //  search: "?utm=your+face",
-       state: { referrer: 23 }
-     }}
+      }}
    />}
          
 
-     {currentuser && <div>
+     {localStorage.getItem('user')  && <div>
  
        
        <Route exact path="/">

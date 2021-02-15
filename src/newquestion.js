@@ -1,6 +1,8 @@
 import {useState} from 'react';
 import * as data from './_Data';
+import  Login from './Login';
 import React from 'react'
+import {Redirect, BrowserRouter as Router, Route, Link} from 'react-router-dom'
 export function Newquestion(){
     var optionOne=""
     var optionTwo=""
@@ -33,6 +35,7 @@ export function Newquestion(){
     
     }
     return <div>
+        {localStorage.getItem('user') && <Redirect to={Login}/>}
         <h3>Create a new Question</h3>
 <table style={{margin:"auto"}}>
     <tbody>

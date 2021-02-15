@@ -15,22 +15,18 @@ export function Myanswered(){
     var myQuestions;
     var setMyQuestions;
  
-  //  [users, setUsers]  = useState();
-//   [myQuestions, setMyQuestions]  = useState()
-  [questions, setQuestions]  = useState()
+   [questions, setQuestions]  = useState()
 
     React.useEffect(()=>{
         (async()=>{
 
               users=  await data._getUsers()
               questions=  await data._getQuestions()
-           //  setUsers(users);
-             usr = localStorage.getItem('user');
+              usr = localStorage.getItem('user');
 
   
               setQuestions({user: users[usr], questions: questions, myQuestions: users[localStorage.getItem('user')].questions});
-            //   setMyQuestions(users[localStorage.getItem('user')].questions);
-         })()
+          })()
 
     },[])
     return <div>

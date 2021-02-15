@@ -121,7 +121,7 @@
 
   export function _getUsers () {
     return new Promise((res, rej) => {
-      setTimeout(() => res({...users}), 1000)
+      setTimeout(() => res({...users}), 1)
     })
   }
   export function _addUsers (id, name) {
@@ -140,7 +140,7 @@
 
   export function _getQuestions () {
     return new Promise((res, rej) => {
-      setTimeout(() => res({...questions}), 1000)
+      setTimeout(() => res({...questions}), 1)
     })
   }
 
@@ -180,7 +180,7 @@
         }
 
         res(formattedQuestion)
-      }, 1000)
+      }, 1)
     })
   }
 

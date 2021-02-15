@@ -2,6 +2,7 @@ import React from 'react';
 import {Redirect, BrowserRouter as Router, Route} from 'react-router-dom'
 export function Login(props){
     function setcurrentuser(evt){
+
         props.setcurrentuser(evt.target.value)
         localStorage.setItem("user",evt.target.value)
     }
@@ -19,7 +20,7 @@ export function Login(props){
   }}
 />}
     <select value={props.currentuser} onChange={setcurrentuser }>
-        <option key="" disabled value="" defaultValue> Log in As</option>
+        <option  >  </option>
             {props.users && Object.keys(props.users).map(x=> 
 
                  <option key={x} value={props.users[x].id}>
