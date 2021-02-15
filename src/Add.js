@@ -3,7 +3,7 @@ import * as data from './_Data';
 import  Login from './Login';
 import React from 'react'
 import {Redirect, BrowserRouter as Router, Route, Link} from 'react-router-dom'
-export function Newquestion(){
+export function Add(){
     var optionOne=""
     var optionTwo=""
     var setOptionOne
@@ -24,18 +24,18 @@ export function Newquestion(){
         setOptionTwo(evt.target.value);
     }
     function save(){
+        alert(JSON.stringify({optionOneText: optionOne, optionTwoText: optionTwo, author: localStorage.getItem('user')}))
         // optionOneText, optionTwoText, author
         (async() => {
         await data._saveQuestion({optionOneText: optionOne, optionTwoText: optionTwo, author: localStorage.getItem('user')})
             setOptionOne('');
             setOptionTwo('');
-            alert('question added');
-    
+     
         })();
     
     }
     return <div>
-        {localStorage.getItem('user') && <Redirect to={Login}/>}
+        {!localStorage.getItem('user') && <Redirect to={Login}/>}
         <h3>Create a new Question</h3>
 <table style={{margin:"auto"}}>
     <tbody>
@@ -56,4 +56,4 @@ Option Two:   <input value={optionTwo}  onChange={setOptionTwo2}/> <br/>
     </div>
 }
 
-export default Newquestion;
+export default Add;

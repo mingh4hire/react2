@@ -12,15 +12,14 @@ export function Login(props){
 
  
  <br/>
- {props.currentuser &&
+ {(props.currentuser && localStorage.getItem('user')) &&
  <Redirect
   to={{
-    pathname: "/",
-     state: { referrer: 23 }
-  }}
+    pathname: "/" 
+   }}
 />}
-    <select value={props.currentuser} onChange={setcurrentuser }>
-        <option  >  </option>
+    <select value={props.currentuser} value="" onChange={setcurrentuser }>
+        <option selected >  </option>
             {props.users && Object.keys(props.users).map(x=> 
 
                  <option key={x} value={props.users[x].id}>

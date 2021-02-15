@@ -20,7 +20,7 @@ export function Leaderboard(){
 
 <h3>Leaderboard</h3>
 <div>
-<table className='center' style={{display:'fixed', margin:'auto'}}>
+<table className='leaderboard' style={{display:'fixed', margin:'auto'}}>
 { Users && (Users).map(x=>  <tr>
     <td><img src={x.avatarURL} style={{width:32, height:32}}/></td><td>
     {x.name }</td><td> {Object.keys(x.answers).length + x.questions.length} points &nbsp;</td>

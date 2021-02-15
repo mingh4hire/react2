@@ -5,15 +5,11 @@ import React from 'react';
 export function Myanswered(){
 
     var usr = localStorage.getItem('user');
-     var setUser
-
+ 
      var users 
-    var setUsers
-    var questions
+     var questions
     var setQuestions
-
-    var myQuestions;
-    var setMyQuestions;
+ 
  
    [questions, setQuestions]  = useState()
 
@@ -32,7 +28,7 @@ export function Myanswered(){
     return <div>
         
          <h3>My answered questions</h3>
-        {questions && questions.myQuestions && Object.keys(questions.user.answers).map(x=>{
+        {localStorage.getItem('user') && questions && questions.myQuestions && Object.keys(questions.user.answers).map(x=>{
 
 
                 return <div key={x}>

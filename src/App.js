@@ -8,14 +8,14 @@ import React from 'react'
 import {Redirect, BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import myquestions from './myquestions';
 import Leaderboard from './leaderboard';
-import Newquestion from './newquestion';
+import Add from './Add';
  import Myanswered from './myanswered';
 import Myunanswered from './myunanswered';
 import Question from './Question';
-function App() {
+ function App() {
   function logout(){
     localStorage.setItem('user', null);
-    setcurrentuser()
+    setcurrentuser('')
   }
    const  [users, setusers ] = useState()
   const  [currentuser, setcurrentuser ] = useState()
@@ -63,20 +63,15 @@ function App() {
     
 
     {(localStorage.getItem('user') || currentuser) && 
-      <Link onClick={logout}> log out</Link>
+      <Link onClick={logout}> Log out</Link>
     }
-    
-    
-
- 
-
-
     <Route path="/myquestions"  component={myquestions}/>
     <Route path="/myanswered"  component={Myanswered}/>
     <Route path="/myunanswered"  component={Myunanswered}/>
     <Route path="/leaderboard"  component={Leaderboard}/>
     <Route path="/question/:question_id"  component={Question}/>
-    
+    <Route path="/add" component={Add}   />
+
 
     <Route path="/yourquestions" render={(props)=>{
       return <div>
@@ -92,9 +87,8 @@ function App() {
       <Login users={users} setusers={setusers} setcurrentuser={setcurrentuser} currentuser={currentuser}/>
       
       }   />
- <Route path="/add" component={Newquestion      }   />
 
-    {(!localStorage.getItem('user') && !currentuser) &&  
+    {( !currentuser) &&  
      <Redirect
      to={{
        pathname: "/login"
