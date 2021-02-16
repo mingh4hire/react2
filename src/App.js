@@ -47,7 +47,7 @@ import {useDispatch, useSelector} from 'react-redux'
     {(localStorage.getItem('user') || currentuser) && 
     <Route path="/" render={(props)=>{
       return <div>
-          Welcome {currentuser}
+          Welcome {loggedin}
           
       </div>
     }}>

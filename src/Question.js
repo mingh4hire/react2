@@ -40,7 +40,7 @@ export function Question(){
               
               
                    </table>
- <table className='center'>
+ <table className='center' className='questionvotes'>
      <tbody> 
  <tr><td>Votes for option one</td></tr>
  {question.question.optionOne.votes.map(x=><tr>

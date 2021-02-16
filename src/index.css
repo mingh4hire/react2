@@ -11,7 +11,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-.leaderboard.center{
+.leaderboard.center .questionvotes{
   display:block;
   width:300px;
   margin:auto;

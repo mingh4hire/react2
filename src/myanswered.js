@@ -1,6 +1,7 @@
 import * as data from './_Data';
 import {useState} from 'react';
 import React from 'react';
+import {Redirect, BrowserRouter as Router, Route, Link} from 'react-router-dom'
 
 export function Myanswered(){
 
@@ -15,18 +16,19 @@ export function Myanswered(){
 
     React.useEffect(()=>{
         (async()=>{
-
+                if (!localStorage.getItem('user')) return
               users=  await data._getUsers()
               questions=  await data._getQuestions()
               usr = localStorage.getItem('user');
-
-  
+                if (!usr || usr.length < 2) return;
+                if (!users[localStorage.getItem('user')]) return;
               setQuestions({user: users[usr], questions: questions, myQuestions: users[localStorage.getItem('user')].questions});
           })()
 
     },[])
     return <div>
-        
+                {!localStorage.getItem('user') && <Redirect to="/Login" />}
+
          <h3>My answered questions</h3>
         {localStorage.getItem('user') && questions && questions.myQuestions && Object.keys(questions.user.answers).map(x=>{
 
