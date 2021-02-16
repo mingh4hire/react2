@@ -4,7 +4,8 @@ import {useDispatch, useSelector} from 'react-redux'
 
 export function Login(props){
     
-    const loggedin = useSelector(state=>state);
+    const statesel = useSelector(state=>state) 
+    const loggedin = statesel && statesel.user;
     const dispatch = useDispatch( );
     function add(user){
       dispatch({type:'user', user:user})

@@ -40,7 +40,7 @@ export function Question(){
               
               
                    </table>
- <table className='center' className='questionvotes'>
+ <table className='center' className='questionvotes' style={{margin:"auto", width:200, display:'block'}}>
      <tbody> 
  <tr><td>Votes for option one</td></tr>
  {question.question.optionOne.votes.map(x=><tr>
@@ -53,7 +53,9 @@ export function Question(){
 </table>
 
 
-<table className='center'><tbody>
+<table className='center' className='questionvotes' style={{margin:"auto", width:200, display:'block'}}>
+
+    <tbody>
 <tr><td>Votes for option two</td></tr>
 {question.question.optionTwo.votes.map(x=><tr> 
 <td>   {x}  </td>

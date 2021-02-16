@@ -3,7 +3,10 @@ import * as data from './_Data';
 import  Login from './Login';
 import React from 'react'
 import {Redirect, BrowserRouter as Router, Route, Link} from 'react-router-dom'
+import {useSelector, useDispatch} from 'react-redux';
  export function AllQuestions(){
+    const statesel = useSelector(state=>state) 
+    const loggedin = statesel && statesel.user;
     var [questions, setQuestions] =useState()
     React.useEffect(()=>{
         (async()=>{
@@ -15,7 +18,7 @@ import {Redirect, BrowserRouter as Router, Route, Link} from 'react-router-dom'
     },[])
   
     return <div>
-        {!localStorage.getItem('user') && <Redirect to="/Login" />}
+        {!localStorage.getItem('user') && !loggedin && <Redirect to="/Login" />}
             {questions && Object.keys(questions).map(x=> <div>
                 {/* {"asdf+33 " + questions[x].optionOne.text} */}
                 <Link to={ '/question/' +questions[x].id} >go to question {questions[x].id}</Link>

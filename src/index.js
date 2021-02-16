@@ -5,9 +5,20 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
-  var store = createStore(function(state=null, action){
-    if (action.type == 'user')
-    return action.user
+  var store = createStore(function(state=localStorage.getItem('user'), action){
+    if (action == null && localStorage.getItem('user')){
+      return localStorage.getItem('user');
+    }
+    if (action.type == 'user'){
+      localStorage.setItem('user', action.user)
+      return {...state, user: action.user};
+    }
+    if (action.type == 'users'){
+      return {...state, users: action.users};
+    }
+    if (action.type == 'questions'){
+      return {...state, questions: action.questions};
+    }
     return null;
   });
 

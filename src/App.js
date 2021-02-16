@@ -17,12 +17,13 @@ import AllQuestions from './AllQuestions';
 import {useDispatch, useSelector} from 'react-redux'
 
  function App() {
-  const loggedin = useSelector(state=>state);
-  const dispatch = useDispatch( );
+  const statesel = useSelector(state=>state) 
+  const loggedin = statesel && statesel.user;
+const dispatch = useDispatch( );
    
   
   function logout(){
-    localStorage.setItem('user', null);
+    // localStorage.setItem('user', null);
     dispatch({type:'user', user:null})
 
     setcurrentuser('')
@@ -44,7 +45,7 @@ import {useDispatch, useSelector} from 'react-redux'
     <div className="App">
 <h3>Would you rather...</h3>
 <Router>
-    {(localStorage.getItem('user') || currentuser) && 
+    { loggedin && 
     <Route path="/" render={(props)=>{
       return <div>
           Welcome {loggedin}
@@ -102,7 +103,7 @@ import {useDispatch, useSelector} from 'react-redux'
       
       }   />
 
-    {( !currentuser) &&  
+    {( !loggedin || !currentuser || !localStorage.getItem('user')) &&  
      <Redirect
      to={{
        pathname: "/login"
