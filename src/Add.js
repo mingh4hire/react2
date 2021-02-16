@@ -13,9 +13,8 @@ export function Add(){
 
     React.useEffect(()=>{
 
-
     },[])
-    
+
     function setOptionOne1(evt){
          setOptionOne(evt.target.value)
         
