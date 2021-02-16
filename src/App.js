@@ -12,9 +12,19 @@ import Add from './Add';
  import Myanswered from './myanswered';
 import Myunanswered from './myunanswered';
 import Question from './Question';
+import AllQuestions from './AllQuestions';
+
+import {useDispatch, useSelector} from 'react-redux'
+
  function App() {
+  const loggedin = useSelector(state=>state);
+  const dispatch = useDispatch( );
+   
+  
   function logout(){
     localStorage.setItem('user', null);
+    dispatch({type:'user', user:null})
+
     setcurrentuser('')
   }
    const  [users, setusers ] = useState()
@@ -59,6 +69,9 @@ import Question from './Question';
     {(localStorage.getItem('user') || currentuser) && 
       <Link to="/add">Create question</Link>
     }&nbsp;
+    {(localStorage.getItem('user') || currentuser) && 
+      <Link to="/allquestions">Show all Questions</Link>
+    }&nbsp;
 
     
 
@@ -69,6 +82,7 @@ import Question from './Question';
     <Route path="/myanswered"  component={Myanswered}/>
     <Route path="/myunanswered"  component={Myunanswered}/>
     <Route path="/leaderboard"  component={Leaderboard}/>
+    <Route path="/allquestions"  component={AllQuestions}/>
     <Route path="/question/:question_id"  component={Question}/>
     <Route path="/add" component={Add}   />
 

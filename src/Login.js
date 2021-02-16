@@ -1,9 +1,19 @@
 import React from 'react';
 import {Redirect, BrowserRouter as Router, Route} from 'react-router-dom'
-export function Login(props){
-    function setcurrentuser(evt){
+import {useDispatch, useSelector} from 'react-redux'
 
+export function Login(props){
+    
+    const loggedin = useSelector(state=>state);
+    const dispatch = useDispatch( );
+    function add(user){
+      dispatch({type:'user', user:user})
+    }
+  
+    function setcurrentuser(evt){
+        
         props.setcurrentuser(evt.target.value)
+        add(evt.target.value)
         localStorage.setItem("user",evt.target.value)
     }
     return <div> 
@@ -12,7 +22,7 @@ export function Login(props){
 
  
  <br/>
- {(props.currentuser && localStorage.getItem('user')) &&
+ {(loggedin && localStorage.getItem('user')) &&
  <Redirect
   to={{
     pathname: "/" 
