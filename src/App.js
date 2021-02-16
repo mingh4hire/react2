@@ -61,6 +61,9 @@ const dispatch = useDispatch( );
     
     }
     {(localStorage.getItem('user') || currentuser) && 
+      <Link to="/">Home</Link>
+    }&nbsp;
+    {(localStorage.getItem('user') || currentuser) && 
       <Link to="/leaderboard">Go to leaderboard</Link>
     }&nbsp;
     {(localStorage.getItem('user') || currentuser) && 
@@ -73,7 +76,7 @@ const dispatch = useDispatch( );
       <Link to="/add">Create question</Link>
     }&nbsp;
     {(localStorage.getItem('user') || currentuser) && 
-      <Link to="/allquestions">Show all Questions</Link>
+      <Link to="/allquestions">All Questions</Link>
     }&nbsp;
 
     
@@ -112,7 +115,11 @@ const dispatch = useDispatch( );
       //  search: "?utm=your+face",
       }}
    />}
-         
+     { loggedin &&
+     
+    <Route path="/"exact  component={AllQuestions}/>
+    
+     }
 
      {localStorage.getItem('user')  && <div>
  

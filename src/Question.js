@@ -1,30 +1,50 @@
 import React from 'react';
 import { useState } from 'react';
+import {Redirect, BrowserRouter as Router, Route, Link} from 'react-router-dom'
+
 import { useParams } from "react-router-dom";
 import * as data from './_Data';
 import { useSelector, useDispatch } from 'react-redux';
 
 export function Question() {
     const { question_id } = useParams()
-    var question
-    const dispatch = useDispatch();
+     const dispatch = useDispatch();
     const selector = useSelector(x => x);
-    var setQuestion
-    [question, setQuestion] = useState()
+     const vote = function(evt){
+          var val = evt.target.value;
 
+        //   (async()=>{
+        //     await data._saveQuestionAnswer( { authedUser:selector.user,qid: question_id, answer:val })
+        //    setquestions(await data._getQuestions());
+        //    dispatch({type:'questions', questions:questions})
+   
+        //     })();
+        (async()=>{
+            // authedUser, qid, answer
+            await data._saveQuestionAnswer({authedUser: selector.user, qid: question_id, answer: val})
+            var questions = await data._getQuestions()
+            var users = await data._getUsers()
+            dispatch({ type: 'questions', questions: questions })
+            dispatch({ type: 'users', users: users })
+
+ 
+
+        })()
+        
+    }
     React.useEffect(() => {
         (async () => {
             var questions = await data._getQuestions()
             var users = await data._getUsers()
             var user = Object.keys(users).filter(x => users[x].questions.indexOf(question_id) >= 0);
             user = users[user];
-            setQuestion({ question: questions[question_id], user: user })
-            dispatch({ type: 'questions', questions: questions })
+             dispatch({ type: 'questions', questions: questions })
+            dispatch({ type: 'users', users: users })
 
         })()
     }, []);
     return <div>
-        {selector && selector.questions &&
+        {selector && selector.questions && selector.users &&
             <div>
                 <table style={{ margin: "auto" }} className='center'>
                     <tbody>
@@ -51,10 +71,10 @@ export function Question() {
                 <table className='center' className='questionvotes' style={{ margin: "auto", width: 333, display: 'block' }}>
                     <tbody>
                         <tr><td>Votes for option one ({selector.questions[question_id].optionOne.votes.length} ) {selector.questions[question_id].optionOne.votes.length
-                        +selector.questions[question_id].optionTwo.votes.length >0
-                        && Math.round((selector.questions[question_id].optionOne.votes.length *100/ (selector.questions[question_id].optionTwo.votes.length +
-                            selector.questions[question_id].optionOne.votes.length)))}% 
-                        
+                            + selector.questions[question_id].optionTwo.votes.length > 0
+                            && Math.round((selector.questions[question_id].optionOne.votes.length * 100 / (selector.questions[question_id].optionTwo.votes.length +
+                                selector.questions[question_id].optionOne.votes.length)))}%
+
                         </td></tr>
                         {selector.questions[question_id].optionOne.votes.map(x => <tr>
                             <td>   {x} | {selector.users[x].name} |  <img src={selector.users[x].avatarURL} width={32} height={32} /></td>
@@ -69,26 +89,39 @@ export function Question() {
                 <table className='center' className='questionvotes' style={{ margin: "auto", width: 200, display: 'block' }}>
 
                     <tbody>
-                    <tr><td>Votes for option two ({selector.questions[question_id].optionTwo.votes.length} ) {selector.questions[question_id].optionTwo.votes.length + 
-                    selector.questions[question_id].optionOne.votes.length>0
-                        && Math.round((selector.questions[question_id].optionTwo.votes.length *100/ (selector.questions[question_id].optionTwo.votes.length +
-                            selector.questions[question_id].optionOne.votes.length)))}% 
+                        <tr><td>Votes for option two ({selector.questions[question_id].optionTwo.votes.length} ) {selector.questions[question_id].optionTwo.votes.length +
+                            selector.questions[question_id].optionOne.votes.length > 0
+                            && Math.round((selector.questions[question_id].optionTwo.votes.length * 100 / (selector.questions[question_id].optionTwo.votes.length +
+                                selector.questions[question_id].optionOne.votes.length)))}%
 
-                            
+
                             </td></tr>
                         {selector.questions[question_id].optionTwo.votes.map(x => <tr>
                             <td>   {x} | {selector.users[x].name} |  <img src={selector.users[x].avatarURL} width={32} height={32} /></td>
 
                         </tr>)}
-                        {selector.questions[question_id].optionTwo.votes.length == 0 && <tr><td>Nobody</td></tr>}
+                        {selector.questions && selector.questions[question_id].optionTwo.votes.length == 0 && <tr><td>Nobody</td></tr>}
                     </tbody>
                 </table>
-            </div>
+                <br />
+                {selector.users && !selector.users[selector.user].answers[question_id]  &&
+                    <div>
+                        <h3>Vote</h3>
+                        Vote for option one <input value='optionOne' type='radio' onClick={vote} />
+                        Vote for option two <input value='optionTwo' type='radio' onClick={vote} />
 
+                    </div>}
+                    {selector.users && selector.users[selector.user].answers[question_id]    &&
+                    <div>
+                        <h3>You already voted for {selector.users[selector.user].answers[question_id]}   </h3>
 
+                    </div>}
+                    <br/>      <Link to="/">Go back</Link>
+
+             </div>
+            
         }
-
-    </div>
+        </div>
 }
 
 export default Question;

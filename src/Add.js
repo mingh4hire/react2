@@ -24,8 +24,7 @@ export function Add(){
         setOptionTwo(evt.target.value);
     }
     function save(){
-        alert(JSON.stringify({optionOneText: optionOne, optionTwoText: optionTwo, author: localStorage.getItem('user')}))
-        // optionOneText, optionTwoText, author
+         // optionOneText, optionTwoText, author
         (async() => {
         await data._saveQuestion({optionOneText: optionOne, optionTwoText: optionTwo, author: localStorage.getItem('user')})
             setOptionOne('');

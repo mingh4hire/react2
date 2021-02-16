@@ -5,9 +5,9 @@ import React from 'react'
 import {Redirect, BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux';
  export function AllQuestions(){
-    const statesel = useSelector(state=>state) 
+    const selector = useSelector(state=>state) 
     const dispatch = useDispatch() 
-    const loggedin = statesel && statesel.user;
+    const loggedin = selector && selector.user;
     var [questions, setQuestions] =useState()
     React.useEffect(()=>{
         (async()=>{
@@ -23,9 +23,11 @@ import {useSelector, useDispatch} from 'react-redux';
         {!localStorage.getItem('user') && !loggedin && <Redirect to="/Login" />}
             {questions && Object.keys(questions).map(x=> <div>
                 {/* {"asdf+33 " + questions[x].optionOne.text} */}
-                <Link to={ '/question/' +questions[x].id} >go to question {questions[x].id}</Link>
                 <br/>
-                Author: {questions[x].author} <br/> 
+                Author: {questions[x].author} <img src={selector.users[questions[x].author].avatarURL} width={32} height={32}/>         
+                       <Link to={ '/question/' +questions[x].id} >go to question 
+                 </Link>
+ <br/> 
                 Would you rather <span style={{color:'blue'}} >{ questions[x].optionOne.text } </span>
                 
                 {questions[x].optionOne.votes.length} votes

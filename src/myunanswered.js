@@ -25,8 +25,8 @@ export function Myunanswered(){
         var qid = arr[0];
         var ans =arr[1];
          (async()=>{
-         await data._saveQuestionAnswer( { authedUser:selector.user,qid: qid, answer:ans })
-        setquestions(await data._getQuestions());
+          await data._saveQuestionAnswer( { authedUser:selector.user,qid: qid, answer:ans });
+         var questions = await data._getQuestions()
         dispatch({type:'questions', questions:questions})
 
          })();
