@@ -37,6 +37,8 @@ const dispatch = useDispatch( );
     var  questions = await data._getQuestions();
     setusers(users);
     setquestions(questions);
+    dispatch({type:'users', users:users})
+    dispatch({type:'questions', questions:questions})
    })();
 }, []);
   return (

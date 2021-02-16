@@ -1,14 +1,21 @@
 import * as data from './_Data';
 import {useState} from 'react';
 import React from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+
 export function Myunanswered(){
     var user =localStorage.getItem('user');
+    const dispatch = useDispatch();
+    const selector = useSelector(x=>x);
     var setquestions
+    
     var questions
        [questions, setquestions ] = useState()
     var effect = React.useEffect(()=>{ (async()=>{
         questions = await data._getQuestions();
         setquestions(questions);
+        dispatch({type:'questions', questions:questions})
+
         })();
     }, []);
 
@@ -18,8 +25,10 @@ export function Myunanswered(){
         var qid = arr[0];
         var ans =arr[1];
          (async()=>{
-        await data._saveQuestionAnswer( { authedUser:user,qid: qid, answer:ans })
+         await data._saveQuestionAnswer( { authedUser:selector.user,qid: qid, answer:ans })
         setquestions(await data._getQuestions());
+        dispatch({type:'questions', questions:questions})
+
          })();
         
     }
@@ -27,11 +36,13 @@ export function Myunanswered(){
     return <div> 
         
         <h3>Answer some questions</h3>
-        {questions && Object.keys(questions).filter(x=>questions[x].optionOne.votes.indexOf(user) < 0 && 
-       questions[ x].optionTwo.votes.indexOf(user) < 0 ).map(x=>
-            <div key={questions[x].id}>
-                Would you rather <input type='radio' name={questions[x].id} key='option1' onClick={answer} value={questions[x].id +"|optionOne"}/> {questions[x].optionOne.text} or 
-                <input type='radio' onClick={answer} name={questions[x].id} key='option2' value={questions[x].id +"|optionTwo"}/> {questions[x].optionTwo.text} 
+        {selector && selector.questions && Object.keys(selector.questions).filter(x=>selector.questions[x].optionOne.votes.indexOf(selector.user) < 0 && 
+       selector.questions[ x].optionTwo.votes.indexOf(selector.user) < 0 ).map(x=>
+            <div key={selector.questions[x].id}>
+                Would you rather <input type='radio' name={selector.questions[x].id} key='option1' onClick={answer} value={selector.questions[x].id +"|optionOne"}/>
+                 {selector.questions[x].optionOne.text} or 
+                <input type='radio' onClick={answer} name={selector.questions[x].id} key='option2' value={selector.questions[x].id +"|optionTwo"}/>
+                 {selector.questions[x].optionTwo.text} 
                 </div>)
 
 

@@ -2,6 +2,7 @@ import * as data from './_Data';
 import {useState} from 'react';
 import React from 'react';
 import {Redirect, BrowserRouter as Router, Route, Link} from 'react-router-dom'
+import {useSelector, useDispatch} from 'react-redux';
 
 export function Myanswered(){
 
@@ -10,7 +11,8 @@ export function Myanswered(){
      var users 
      var questions
     var setQuestions
- 
+  const dispatch = useDispatch();
+  
  
    [questions, setQuestions]  = useState()
 
@@ -23,6 +25,9 @@ export function Myanswered(){
                 if (!usr || usr.length < 2) return;
                 if (!users[localStorage.getItem('user')]) return;
               setQuestions({user: users[usr], questions: questions, myQuestions: users[localStorage.getItem('user')].questions});
+              dispatch({type:'users', users:users})
+              dispatch({type:'questions', questions:questions})
+  
           })()
 
     },[])

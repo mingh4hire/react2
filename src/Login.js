@@ -9,6 +9,7 @@ export function Login(props){
     const dispatch = useDispatch( );
     function add(user){
       dispatch({type:'user', user:user})
+      
     }
   
     function setcurrentuser(evt){

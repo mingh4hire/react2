@@ -6,13 +6,15 @@ import {Redirect, BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux';
  export function AllQuestions(){
     const statesel = useSelector(state=>state) 
+    const dispatch = useDispatch() 
     const loggedin = statesel && statesel.user;
     var [questions, setQuestions] =useState()
     React.useEffect(()=>{
         (async()=>{
            var q =  await data._getQuestions();
             setQuestions(q);
-
+             dispatch({type:'questions', questions:questions})
+        
         })();
 
     },[])
