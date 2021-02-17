@@ -2,8 +2,12 @@ import {useState} from 'react';
 import * as data from './_Data';
 import  Login from './Login';
 import React from 'react'
+import {useSelector, useDispatch} from 'react-redux';
+
 import {Redirect, BrowserRouter as Router, Route, Link} from 'react-router-dom'
 export function Add(){
+    var selector = useSelector(x=>x);
+    var dispatch = useDispatch();
     var optionOne=""
     var optionTwo=""
     var setOptionOne
@@ -29,8 +33,7 @@ export function Add(){
         await data._saveQuestion({optionOneText: optionOne, optionTwoText: optionTwo, author: localStorage.getItem('user')})
             setOptionOne('');
             setOptionTwo('');
-     
-        })();
+         })();
     
     }
     return <div>
