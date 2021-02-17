@@ -1,50 +1,50 @@
 import React from 'react';
-import {Redirect, BrowserRouter as Router, Route} from 'react-router-dom'
-import {useDispatch, useSelector} from 'react-redux'
+import { Redirect, BrowserRouter as Router, Route } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import UserAction from './UserAction';
+import QuestionsAction from './QuestionsAction';
+import UsersAction from './UsersAction';
+import * as data from './_Data';
+export function Login(props) {
 
-export function Login(props){
-    
-    const statesel = useSelector(state=>state) 
-    const loggedin = statesel && statesel.user;
-    const dispatch = useDispatch( );
-    function add(user){
-      dispatch({type:'user', user:user})
-      
-    }
-  
-    function setcurrentuser(evt){
-        
-        props.setcurrentuser(evt.target.value)
-        add(evt.target.value)
-        localStorage.setItem("user",evt.target.value)
-    }
-    return <div> 
-{props.currentuser}
-{!props.currentuser  && ' Log in please '}<br/>
-
+    const user= useSelector(x=>x.user);
+    const users= useSelector(x=>x.users);
+     const dispatch = useDispatch();
  
- <br/>
- {(loggedin && localStorage.getItem('user')) &&
- <Redirect
-  to={{
-    pathname: "/" 
-   }}
-/>}
-    <select value={props.currentuser} value="" onChange={setcurrentuser }>
-        <option selected >  </option>
-            {props.users && Object.keys(props.users).map(x=> 
+    function add(user) {
+        dispatch(UserAction(user)())
 
-                 <option key={x} value={props.users[x].id}>
-                        {props.users[x].name} | 
-                    {props.users[x].id}
-                </option>
+    }
 
-            
-            
-         )}
-    </select>
+    function setcurrentuser(evt) {
 
-</div>
+        add(evt.target.value)
+    }
+    return <div>
+         <br />
+         <br />
+         Select a user
+          {user && <Redirect
+                to={{
+                    pathname: "/"
+                }}
+            />}  
+         
+           {   users && Object.keys(users) &&
+        <select onChange = {setcurrentuser}>
+            <option selected></option>
+                {users && Object.keys(users).map(x=>
+                    <option key={x} value={x}>
+                            {users[x].id } | {users[x].name }
+
+                    </option>
+                    
+                    )}
+
+        </select>
+}
+           
+    </div>
 
 
 }

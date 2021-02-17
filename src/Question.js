@@ -5,6 +5,9 @@ import {Redirect, BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import { useParams } from "react-router-dom";
 import * as data from './_Data';
 import { useSelector, useDispatch } from 'react-redux';
+import UserAction from './UserAction';
+import QuestionsAction from './QuestionsAction';
+import UsersAction from './UsersAction';
 
 export function Question() {
     const { question_id } = useParams()
@@ -24,8 +27,8 @@ export function Question() {
             await data._saveQuestionAnswer({authedUser: selector.user, qid: question_id, answer: val})
             var questions = await data._getQuestions()
             var users = await data._getUsers()
-            dispatch({ type: 'questions', questions: questions })
-            dispatch({ type: 'users', users: users })
+            dispatch(QuestionsAction(questions)())
+            dispatch(UsersAction(users)())
 
  
 
@@ -38,8 +41,8 @@ export function Question() {
             var users = await data._getUsers()
             var user = Object.keys(users).filter(x => users[x].questions.indexOf(question_id) >= 0);
             user = users[user];
-             dispatch({ type: 'questions', questions: questions })
-            dispatch({ type: 'users', users: users })
+            dispatch(QuestionsAction(questions)())
+            dispatch(UsersAction(users)())
 
         })()
     }, []);

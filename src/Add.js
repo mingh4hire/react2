@@ -6,8 +6,8 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import {Redirect, BrowserRouter as Router, Route, Link} from 'react-router-dom'
 export function Add(){
-    var selector = useSelector(x=>x);
-    var dispatch = useDispatch();
+     const user= useSelector(x=>x.user);
+     var dispatch = useDispatch();
     var optionOne=""
     var optionTwo=""
     var setOptionOne
@@ -30,14 +30,21 @@ export function Add(){
     function save(){
          // optionOneText, optionTwoText, author
         (async() => {
-        await data._saveQuestion({optionOneText: optionOne, optionTwoText: optionTwo, author: localStorage.getItem('user')})
+        await data._saveQuestion({optionOneText: optionOne, optionTwoText: optionTwo, author: user})
             setOptionOne('');
             setOptionTwo('');
          })();
     
     }
     return <div>
-        {!localStorage.getItem('user') && <Redirect to={Login}/>}
+        {!user && 
+          <Redirect
+          to={{
+            pathname: "/login"
+           //  search: "?utm=your+face",
+           }}
+          />
+        }
         <h3>Create a new Question</h3>
 <table style={{margin:"auto"}}>
     <tbody>

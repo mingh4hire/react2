@@ -1,5 +1,5 @@
-export function myquestions(){
+export function MyQuestions(){
     return <div> my questions </div>
 }
 
-export  default myquestions;
+export  default MyQuestions;

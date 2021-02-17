@@ -3,54 +3,64 @@ import './App.css';
 import * as data from './_Data.js';
 import Login from './Login';
 
-import {useState } from 'react'
-import React from 'react'
+ import React from 'react'
 import {Redirect, BrowserRouter as Router, Route, Link} from 'react-router-dom'
-import myquestions from './myquestions';
+
+import MyQuestions from './MyQuestions';
 import Leaderboard from './leaderboard';
 import Add from './Add';
  import Myanswered from './myanswered';
 import Myunanswered from './myunanswered';
 import Question from './Question';
-import AllQuestions from './AllQuestions';
+
+import UserAction from './UserAction';
+import QuestionsAction from './QuestionsAction';
+import UsersAction from './UsersAction';
 
 import {useDispatch, useSelector} from 'react-redux'
-
+import AllQuestions from './AllQuestions';
+ 
  function App() {
-  const statesel = useSelector(state=>state) 
-  const loggedin = statesel && statesel.user;
 const dispatch = useDispatch( );
    
-  
+
   function logout(){
     // localStorage.setItem('user', null);
-    dispatch({type:'user', user:null})
+    dispatch(UserAction(null)() );
 
-    setcurrentuser('')
-  }
-   const  [users, setusers ] = useState()
-  const  [currentuser, setcurrentuser ] = useState()
-  const  [questions, setquestions ] = useState()
-  React.useEffect(()=>{ (async()=>{
-    let isMounted = true
-    var  users = await data._getUsers();
+   }
+   React.useEffect(()=>{ (async()=>{
+     var  users = await data._getUsers();
     var  questions = await data._getQuestions();
-    setusers(users);
-    setquestions(questions);
-    dispatch({type:'users', users:users})
-    dispatch({type:'questions', questions:questions})
+     dispatch(UsersAction(users)())
+    dispatch(QuestionsAction(questions)())
    })();
 }, []);
+const user= useSelector(x=>x.user);
+const users= useSelector(x=>x.users);
+const questions= useSelector(x=>x.questions);
+
   return (
 
 
     <div className="App">
+
+      
 <h3>Would you rather...</h3>
 <Router>
-    { loggedin && 
-    <Route path="/" render={(props)=>{
+
+{!user && 
+          <Redirect
+          to={{
+            pathname: "/login"
+           //  search: "?utm=your+face",
+           }}
+          />
+        }
+    { ( user) && 
+    <Route path="/" exact render={(props)=>{
       return <div>
-          Welcome {loggedin}
+          Welcome {( user)}
           
       </div>
     }}>
@@ -60,31 +70,31 @@ const dispatch = useDispatch( );
     
     
     }
-    {(localStorage.getItem('user') || currentuser) && 
-      <Link to="/">Home</Link>
+    {(localStorage.getItem('user') || ( user)) && 
+      <Link exact to="/">Home</Link>
     }&nbsp;
-    {(localStorage.getItem('user') || currentuser) && 
+    {(localStorage.getItem('user') || ( user)) && 
       <Link to="/leaderboard">Go to leaderboard</Link>
     }&nbsp;
-    {(localStorage.getItem('user') || currentuser) && 
+    {(localStorage.getItem('user') || ( user)) && 
       <Link to="/myunanswered">See unanswered</Link>
     } &nbsp;
-    {(localStorage.getItem('user') || currentuser) && 
+    {(localStorage.getItem('user') || ( user)) && 
       <Link to="/myanswered">See answered</Link>
     } &nbsp;
-    {(localStorage.getItem('user') || currentuser) && 
+    {(localStorage.getItem('user') || ( user)) && 
       <Link to="/add">Create question</Link>
     }&nbsp;
-    {(localStorage.getItem('user') || currentuser) && 
+    {(localStorage.getItem('user') || ( user)) && 
       <Link to="/allquestions">All Questions</Link>
     }&nbsp;
 
     
 
-    {(localStorage.getItem('user') || currentuser) && 
+    {(localStorage.getItem('user') || ( user)) && 
       <Link onClick={logout}> Log out</Link>
     }
-    <Route path="/myquestions"  component={myquestions}/>
+    <Route path="/myquestions"  component={MyQuestions}/>
     <Route path="/myanswered"  component={Myanswered}/>
     <Route path="/myunanswered"  component={Myunanswered}/>
     <Route path="/leaderboard"  component={Leaderboard}/>
@@ -95,7 +105,7 @@ const dispatch = useDispatch( );
 
     <Route path="/yourquestions" render={(props)=>{
       return <div>
-          Welcome {currentuser} here's your questions
+          Welcome {user} here's your questions
         
       </div>
     }}>
@@ -104,18 +114,18 @@ const dispatch = useDispatch( );
     </Route>
     <Route path="/login" component={
       ()=>
-      <Login users={users} setusers={setusers} setcurrentuser={setcurrentuser} currentuser={currentuser}/>
+      <Login    />
       
       }   />
 
-    {( !loggedin || !currentuser || !localStorage.getItem('user')) &&  
+    {( !( user)   || !localStorage.getItem('user')) &&  
      <Redirect
      to={{
        pathname: "/login"
       //  search: "?utm=your+face",
       }}
    />}
-     { loggedin &&
+     { ( user) &&
      
     <Route path="/"exact  component={AllQuestions}/>
     
@@ -125,8 +135,8 @@ const dispatch = useDispatch( );
  
        
        <Route exact path="/">
-     <h3>My Questions that I authored</h3> 
-       {questions && Object.keys(questions).filter(x=> questions[x].author == currentuser).map(x=>
+     <h3>My questions that I authored</h3> 
+       { questions && Object.keys(questions).filter(x=> questions[x].author == user).map(x=>
           
           <div key={x}>
             Would you rather <br/>
