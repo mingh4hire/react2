@@ -35,17 +35,17 @@ export function Myanswered(){
                 {!localStorage.getItem('user') && <Redirect to="/Login" />}
 
          <h3>My answered questions</h3>
-        {localStorage.getItem('user') && questions && questions.myQuestions && Object.keys(questions.user.answers).map(x=>{
+        {localStorage.getItem('user') && selector.questions && selector.users[selector.user].questions && Object.keys(selector.users[selector.user].answers).map(x=>{
 
 
                 return <div key={x}>
                     <div >
-                        {questions.questions[x].optionOne.text} number of votes ({questions.questions[x].optionOne.votes.length} votes)  or  &nbsp;
+                        {selector.questions[x].optionOne.text} number of votes ({selector.questions[x].optionOne.votes.length} votes)  or  &nbsp;
                      
-                      {questions.questions[x].optionTwo.text} number of votes ({questions.questions[x].optionTwo.votes.length} votes)  <br/>
+                      {selector.questions[x].optionTwo.text} number of votes ({selector.questions[x].optionTwo.votes.length} votes)  <br/>
                         {/* My answer was {user.answers[x]}<br/> */}
                         <br/> 
-                        my answer {questions.user.answers[x]}
+                        my answer {selector.user.answers[x]}
                         <br/> <br/> 
                     </div>
                     </div>
