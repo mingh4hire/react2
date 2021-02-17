@@ -7,7 +7,7 @@ import {useSelector, useDispatch} from 'react-redux';
 export function Myanswered(){
 
     var usr = localStorage.getItem('user');
- 
+  const selector = useSelector(x=>x);
      var users 
      var questions
     var setQuestions
@@ -35,7 +35,7 @@ export function Myanswered(){
                 {!localStorage.getItem('user') && <Redirect to="/Login" />}
 
          <h3>My answered questions</h3>
-        {localStorage.getItem('user') && selector.questions && selector.users[selector.user].questions && Object.keys(selector.users[selector.user].answers).map(x=>{
+        {localStorage.getItem('user') && selector && selector.questions && selector.users && selector.users[selector.user].questions && Object.keys(selector.users[selector.user].answers).map(x=>{
 
 
                 return <div key={x}>
@@ -45,7 +45,7 @@ export function Myanswered(){
                       {selector.questions[x].optionTwo.text} number of votes ({selector.questions[x].optionTwo.votes.length} votes)  <br/>
                         {/* My answer was {user.answers[x]}<br/> */}
                         <br/> 
-                        my answer {selector.user.answers[x]}
+                        my answer {selector.users[selector.user].answers[x]}
                         <br/> <br/> 
                     </div>
                     </div>

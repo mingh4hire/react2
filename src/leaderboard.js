@@ -17,7 +17,7 @@ export function Leaderboard(){
                 Users.sort((x,y)=> x.questions.length + Object.keys(x.answers).length > 
                 y.questions.length + Object.keys(y.answers).length ? -1 : 1)
                 setUsers(Users);
-                dispatch({type:'users', users:users});
+                dispatch({type:'users', users:Users});
  
             })();
         }, []);
