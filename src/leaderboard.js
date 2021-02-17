@@ -1,8 +1,12 @@
 import * as data from './_Data';
 import React from 'react';
 import {useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+
 export function Leaderboard(){
     var Users;
+    const selector = useSelector(x=>x);
+    const dispatch = useDispatch();
     var setUsers;
     [Users, setUsers] = useState();
     React.useEffect(()=>{
@@ -13,7 +17,8 @@ export function Leaderboard(){
                 Users.sort((x,y)=> x.questions.length + Object.keys(x.answers).length > 
                 y.questions.length + Object.keys(y.answers).length ? -1 : 1)
                 setUsers(Users);
-                document.x = Users;
+                dispatch({type:'users', users:users});
+ 
             })();
         }, []);
     return <div>
